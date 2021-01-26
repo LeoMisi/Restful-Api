@@ -17,7 +17,7 @@ module.exports = [
     handler: productHandler.save,
   },
   {
-    method: "POST",
+    method: "PUT",
     path: "/api/v1/product/{id}",
     handler: productHandler.update,
   },

@@ -12,7 +12,7 @@ const transformer = (product) => ({
   },
 });
 
-const getAll = async (request, h) => {
+const getAll = async () => {
   const products = await ProductModel.find({});
   return { data: products.map(transformer) };
 };
@@ -34,7 +34,17 @@ const save = async (req, h) => {
   return h.response(transformer(product)).code(201);
 };
 
-const update = async (req, h) => {};
+const update = async (req, h) => {
+  const { name, price } = req.payload;
+  const product = ProductModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    { name, price }
+  );
+  await product.updateOne();
+  // console.log(name, price);
+
+  return h.response(transformer(product)).code(201);
+};
 
 const remove = async (req, h) => {
   await ProductModel.findOneAndDelete({ _id: req.params.id });
